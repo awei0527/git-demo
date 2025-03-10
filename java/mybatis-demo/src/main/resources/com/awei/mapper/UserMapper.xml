@@ -6,7 +6,7 @@
 
 <!--名称空间-->
 <mapper namespace="com.awei.mapper.UserMapper">
-    <select id="selectAll" resultType="com.awei.pojo.User">
+    <select id="selectAll" resultType="user">
         select * from tb_user;
     </select>
 </mapper>
