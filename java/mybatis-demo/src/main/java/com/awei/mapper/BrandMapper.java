@@ -24,5 +24,20 @@ public interface BrandMapper {
 //    List<Brand>selectByCondition(@Param("status") int status,@Param("companyName") String companyName,@Param("brandName") String brandName);
 //    List<Brand>selectByCondition(Brand brand);
 List<Brand>selectByCondition(Map map);
+
+//单条件动态查询
+List<Brand>selectByConditionSingle(Brand brand);
+
+//添加功能
+    void add(Brand brand);
+
+//    修改
+    int update (Brand brand);
+
+//    根据id删除数据
+    void deleteById(int id);
+
+//    批量删除
+    void deleteByIds(int[] ids);
 }
 

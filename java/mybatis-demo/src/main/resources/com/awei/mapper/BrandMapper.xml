@@ -83,7 +83,7 @@
         from tb_brand
         <where>
             <if test="status != null">
-                status=#{status}
+                and status=#{status}
             </if>
             <if test="companyName != null and companyName !='' ">
                 and company_name like #{companyName}
@@ -94,4 +94,68 @@
         </where>
     </select>
 
+
+<!--单条件查询-->
+    <select id="selectByConditionSingle" resultMap="brandResultMap">
+    select * from tb_brand
+    <where>
+    <choose>
+        <when test="status != null">
+            status=#{status}
+        </when>
+        <when test="companyName != null and companyName !='' ">
+            company_name like #{companyName}
+        </when>
+        <when test="brandName != null and brandName !='' ">
+            brand_name like #{brandName}
+        </when>
+
+    </choose>
+    </where>
+
+    </select>
+
+<!--    添加数据-->
+    <insert id="add" useGeneratedKeys="true" keyProperty="id">
+        insert into tb_brand(brand_name,company_name,ordered,description,status)
+        values(#{brandName},#{companyName},#{ordered},#{description},#{status});
+    </insert>
+
+    <!--修改数据-->
+    <update id="update">
+        update tb_brand
+        <set>
+        <if test="brandName != null and brandName !='' ">
+            brand_name=#{brandName},
+        </if>
+        <if test="companyName != null and brandName !='' ">
+            company_name=#{companyName},
+        </if>
+        <if test="ordered != null">
+            ordered=#{ordered},
+        </if>
+        <if test="description != null and brandName !='' ">
+            description=#{description},
+        </if>
+        <if test="status!= null">
+            status=#{status}
+        </if>
+        </set>
+    where id=#{id};
+    </update>
+
+
+    <delete id="deleteById">
+        delete from tb_brand where id=#{id};
+    </delete>
+
+    <!--    批量删除
+    MyBatis会将数组参数,封装为一个map集合,默认为array
+    -->
+    <delete id="deleteByIds">
+        delete from tb_brand where id in
+        <foreach collection="array" item="id" separator="," open="(" close=");">
+            #{id}
+        </foreach>
+    </delete>
 </mapper>
